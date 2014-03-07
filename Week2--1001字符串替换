@@ -1,0 +1,97 @@
+#include<iostream>
+#include<cstdio>
+#include<string>
+#include<cstring>
+
+using namespace std;
+
+int change(char a[],int n)
+{
+    for(int i=0;i<n;i++)
+        if(a[i]<='Z'&&a[i]>='A')
+            a[i]=a[i]+('a'-'A');
+} 
+
+bool judge(char source[],char s1[],int len1,int t)
+{
+    int m=t;
+    int j=0;
+    for (int i=0 ;m < t+ len1;i++,m++)
+    {
+        if(source[m]!=s1[i]) 
+        {j=1;break;}    
+    }
+    if(j==0) return true;
+    else return false;
+}
+
+void replace(char source[],char s1[],char s2[],int flag)
+{
+    int len=strlen(source);
+    int len1=strlen(s1);
+    int len2=strlen(s2);
+    char temp[len];
+    for(int i=0;i<len;i++)
+        temp[i]=source[i];
+    if (flag==0)
+    {
+        for(int i=0;i<len;)
+            {
+                if(judge(source,s1,len1,i)==true)
+                    {
+                        for(int t=0;t<len2;t++)
+                            {
+                            cout<<s2[t];
+                            }
+                        i=i+len1;
+                    }
+                else 
+                    {
+                    cout<<source[i];
+                    i++;    
+                    }
+            }
+        cout<<endl;
+    
+    }
+    
+    if(flag==1)
+    {
+        change(source,len);
+        change(s1,len1);
+        
+                for(int i=0;i<len;)
+            {
+                if(judge(source,s1,len1,i)==true)
+                    {
+                        for(int t=0;t<len2;t++)
+                            {
+                            cout<<s2[t];
+                            }
+                        i=i+len1;
+                    }
+                else 
+                    {
+                    cout<<temp[i];
+                    i++;    
+                    }
+            }
+        cout<<endl;
+    }
+}
+
+int main()
+{
+	char source[1010];
+    char s1[12],s2[12],ac[2];
+    int flag;
+    char a[1010];
+	while(gets(source)){
+		cin>>s1;
+		cin>>s2;
+		cin>>flag;
+		gets(ac);
+		replace(source,s1,s2,flag);
+	}
+	return 0;
+}
