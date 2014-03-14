@@ -1,0 +1,65 @@
+
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+int main()
+{
+    string s;
+    cin>>s;
+    int number;
+    for(number = 0 ; s[number] ; number++);
+    int N;
+    cin>>N;
+    for(int i = 0 ; i < N ; i++)
+    {
+        string s1;
+        cin>>s1;
+        if(s1[0] == 'I')
+        {
+            number++;
+            int m ;
+            string In;
+            cin>>m>>In;
+            string ans = "\0";
+            if(m == 1) s = In + s ;
+            else
+            {
+                bool k = true;
+                for(int i = 1 ; i <= number ; i++)
+                {
+                    if(i == m && k)
+                    {
+                        ans += In[0];i--;k = false;
+                    }
+                    else ans += s[i-1];
+                }
+                s = ans;
+            }
+        }
+        else if(s1[0] == 'D')
+        {
+            string ans = "\0";
+            int m;
+            cin>>m;
+            for(int i = 0 ; i < number ; i++)
+            {
+                if(i != m-1)    ans += s[i];
+            }
+            s = ans;
+            number--;
+        }
+        else if(s1[0] == 'R')
+        {
+            string ans = "\0";
+            for(int i = number-1 ; i >= 0 ; i--)
+            {
+                ans += s[i];
+            }
+            s = ans;
+        }
+
+    }
+    cout<<s<<endl;
+    return 0;
+}
