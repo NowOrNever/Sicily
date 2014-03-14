@@ -1,0 +1,80 @@
+
+#include<iostream>
+#include<cstdio>
+#include<string>
+#include<algorithm>
+
+using namespace std;
+
+struct Student{
+    int student_number;
+    int student_score;
+//  int student_rank;
+}Student[100];
+
+/*struct cheak{
+    int cheak_number;
+    int cheak_s;
+}cheak[100];*/
+
+int inquiry(int x,int y,int n)
+{
+    //cout << x << " " << y << endl;
+    if(x == 1){
+        for(int i = 0;i < n; i++){
+            if( y == Student[i].student_number)
+              return Student[i].student_score;
+        }
+
+    }
+    else if(x == 2){
+        int j,rank = 1;
+        for(int i = 0;i < n;i++)
+        {
+            if(y==Student[i].student_number)
+            {
+                j=i;
+                break;
+            }
+        }
+        for(int i = 0;i < n;i++){
+            if(Student[i].student_score > Student[j].student_score)  rank++;
+        }
+        return rank;
+    }
+    else if(x == 3){
+        int rank = 1;
+        for(int i = 0;i < n;i++){
+            if(Student[i].student_score > y)  rank++;
+        }
+        return rank;
+    }
+    else if(x == 4){
+        int count = 0;
+        for(int i = 0;i < n;i++){
+            if(Student[i].student_score == y)  count++;
+        }
+        return count;
+    }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i = 0;i < n;i++){
+        cin>>Student[i].student_number>>Student[i].student_score;
+//      cout << Student[i].student_number << " " << Student[i].student_score << endl;
+    }
+//  sort(Student,Student+n);
+    int m;
+    int x,y;
+    cin >> m;
+    for(int i = 0;i < m;i++){
+        cin >> x >> y;
+//  cout <<"ca" << x <<" "<<y<<endl;
+        printf("%d\n",inquiry(x,y,n));
+    }
+
+    return 0;
+}
