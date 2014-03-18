@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+class seriesComp {
+public:
+    int n;	//n大于或等于1
+    seriesComp(int n);
+    int sum();
+    int fib();
+    double taylor(double x);
+};
+
+seriesComp::seriesComp(int n) {
+	seriesComp::n = n;
+}
+
+int seriesComp::sum() {
+	return n * (n + 1) / 2;
+}
+
+int seriesComp::fib() {
+	int *a = new int[10000] ;
+	a[0] = 0 ;
+	a[1] = 1 ;
+	for(int i=2;i<10000;i++) a[i] = a[i-1] + a[i-2] ;
+	int sum = 0 ;
+	for(int i=0;i<=seriesComp::n;i++)
+    {
+        sum += a[i];
+	}
+	return sum;
+}
+
+double seriesComp::taylor(double x) {
+	double result = 0;
+	for(int i = 1;i <= n;i++)
+    {
+        double ans2 = 1;
+        double ans = pow(-x,i);
+        for(int j = 2;j <= i;j++){
+            ans2 *= j;
+        }
+        double ans3 = (double)ans / (double)ans2;
+        result += ans3;
+    }
+    return 1 + result;
+}
+
+
+int main() {
+	int T;
+	int n;
+	double x;
+
+	cin >> T;
+	while (T--) {
+		cin >> n >> x;
+		seriesComp mySeriesComp(n);
+		cout << mySeriesComp.sum() << ' ' << mySeriesComp.fib() << ' ' << mySeriesComp.taylor(x) << endl;
+	}
+
+	return 0;
+}
