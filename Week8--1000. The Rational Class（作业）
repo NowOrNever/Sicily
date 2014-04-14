@@ -251,7 +251,7 @@ Rational& Rational::operator/=(Rational &secondRational)
     return (*this); 
 }
 
-long& Rational::operator[](const int &index)                  //极有可能是错的 
+long& Rational::operator[](const int &index)                  
 {
 	if (index == 0)   return numerator; 
     else if (index == 1)   return denominator; 
