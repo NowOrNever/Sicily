@@ -1,0 +1,297 @@
+http://soj.me/show_problem.php?pid=1001&cid=1353
+======
+#include<iostream>
+#include<cstdio>
+#include<string>
+#include<cstring>
+#include<cassert>
+
+using namespace std;
+/*
+class String {
+public:
+  String();             // str = ""
+  String(const char*);    // str = "abc" 
+  String(const String&);   // str = other_string
+  String& operator=(const char *);
+  String& operator=(const String&);
+  String operator+(const String&);
+  ~String();
+ 
+  char& operator[](int i);
+  char operator[](int i) const;
+ 
+  int size() const;
+ 
+  String& operator+=(const String&);
+  String& operator+=(const char*);
+ 
+  friend ostream& operator<<(ostream&, const String&);
+  friend istream& operator>>(istream&, String&);
+ 
+  friend bool operator==(const String& x, const char* s);
+  friend bool operator==(const String& x, const String& y);
+  friend bool operator!=(const String& x, const char* s);
+  friend bool operator!=(const String& x, const String& y);
+private:
+  char *str;
+};
+*/ 
+String::String()
+{
+    str = new char[1];
+    str[0] = '\0';
+}
+
+String::String(const char* s)
+{
+    int length = strlen(s);
+    str = new char[length+1];
+    for(int i=0;i < length;i++)
+        str[i] = s[i];
+    str[length] = '\0';
+}
+
+String::String(const String& x)
+{
+    int length = strlen(x.str);
+    str = new char[length];
+    for(int i = 0;i < length;i++)
+        str[i] = x.str[i];
+    str[length]='\0';
+}
+
+String& String::operator=(const char * s)
+{
+    int length = strlen(s);
+    str = new char [length+1];
+    for(int i=0;i<length;i++)
+        str[i] = s[i];
+    str[length]='\0';
+    return *this;
+}
+String& String::operator=(const String& other)
+{
+    int length = strlen(other.str);
+    str = new char[length+1];
+    for(int i=0;i<length;i++)
+        str[i] = other[i];
+    str[length] = '\0';
+    return *this;
+}
+
+String String::operator+(const String& s)
+{
+    int length= size() + s.size();
+    char *temp = new char[length+1];
+    int i;
+    for(i=0;i < size();i++)
+        temp[i] = str[i];
+    for(int j=0;j < s.size();j++,i++)
+        temp[i] = s[j];
+    temp[length] = '\0';
+    String temp0(temp);
+    return temp0;
+}
+
+String::~String()
+{
+    delete []str; 
+}
+
+char& String::operator[](int i)            ///uiyedfwahihk
+{
+    if(i > size())
+        return str[size()-1];
+    else
+        return str[i];
+}
+
+char String::operator[](int i) const
+{
+    if(i>=0 || strlen(str) < i)
+    return str[i];
+}
+
+int String::size() const            //jgkewsl
+{
+    int length = strlen(str);
+    return length;
+}
+
+String& String::operator+=(const String& h)
+{
+    int length = this->size() + h.size();
+    char *temp = new char[length+1];
+    int i;
+    for(i=0;i < this->size();i++)
+        temp[i] = str[i];
+    for(int j=0;j < h.size();j++,i++)
+        temp[i] = h.str[j];
+    temp[length] = '\0';
+    str = temp;
+    return *this;
+}
+
+String& String::operator+=(const char* h)
+{
+    str = strcat(str,h);
+    return *this;
+}
+
+ostream& operator<<(ostream& output, const String& rhs)
+{
+    output << rhs.str;
+    return output;
+}
+istream& operator>>(istream& input, String& rhs)
+{
+    input >> rhs.str;
+    return input;
+}
+
+bool operator==(const String& x, const char* s)
+{
+    int s_length = strlen(s);
+    bool pass;
+    if(x.size() == s_length)
+    {
+        for(int i=0;i<x.size();i++)
+        {
+            if(x[i] == s[i])
+                pass = true;
+            else
+            {
+                pass = false;
+                break;
+            }
+        }
+    }
+    else
+        pass = false;
+    return pass;
+}
+
+bool operator==(const String& x, const String& y)
+{
+    bool pass;
+    if(x.size() == y.size())
+    {
+        for(int i=0;i < x.size();i++)
+        {
+            if(x[i] == y[i])
+                pass = true;
+            else
+            {
+                pass = false;
+                break;
+            }
+        }
+    }
+    else
+        pass = false;
+    return pass;
+}
+
+bool operator!=(const String& x, const char* s)
+{
+    int s_length = strlen(s);
+    bool pass;
+    if(x.size() == s_length)
+    {
+        for(int i=0;i<x.size();i++)
+        {
+            if(x[i] == s[i])
+                pass = false;
+            else
+            {
+                pass = true;
+                break;
+            }
+        }
+    }
+    else
+        pass = true;
+    return pass;
+}
+
+bool operator!=(const String& x, const String& y)
+{
+    bool pass;
+    if(x.size() == y.size())
+    {
+        for(int i=0;i < x.size();i++)
+        {
+            if(x[i] == y[i])
+                pass = false;
+
+            else
+            {
+                pass = true;
+                break;
+            }
+        }
+    }
+    else
+        pass = true;
+    return pass;
+}
+/*
+String f1(String a, String b)
+{
+  a[2] = 'x';
+  char c = b[2];
+  cout << "in f: " << a << ' ' << b << ' ' << c << '\n';
+  return b;
+}
+ 
+void f2(String s, const String& r)
+{
+  char c1 = s[1];  // c1 = s.operator[](1).operator char()
+  s[1] = 'c';    // s.operator[](1).operator=('c')
+ 
+  char c2 = r[1];  // c2 = r.operator[](1)
+//  r[1] = 'd';    // error: assignment to non-lvalue char, r.operator[](1) = 'd'
+}
+ 
+void f()
+{
+  String x, y, s;
+  cout << "Please enter two strings\n";
+  cin >> x >> y;
+  cout << "x= " << x << " , y = " << y << '\n';
+ 
+    y = f1(x,y);
+    cout << y << endl;
+    
+    f2(x,y);
+ 
+  cout << "s = \"" << s << "\"" << endl;
+  s = "abc";
+  cout << "s = \"" << s << "\"" << endl;
+ 
+    cout << "\"" << x << "\" + \"" << y << "\" = " << "\"" << x+y << "\"\n";
+  String z = x;
+  if (x != z) cout << "x corrupted!\n";
+  x[0] = '!';
+  if (x == z) cout << "write failed!\n";
+  cout << "exit: " << x << ' ' << z << '\n';  
+ 
+    z = s;
+  if (s != z) cout << "s corrupted!\n";
+  s[0] = '!';
+  if (s == z) cout << "write failed!\n";
+  cout << "exit: " << s << ' ' << z << '\n';  
+ 
+}
+ 
+int main()
+{
+  int T;
+  cin >> T;
+  while (T--)
+  {
+    f();
+  }
+}
+*/
